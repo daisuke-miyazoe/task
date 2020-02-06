@@ -64,7 +64,7 @@ class Admin::UsersController < ApplicationController
   def require_admin
     if current_user
       redirect_to root_path unless current_user.admin?
-    unless
+    else
       redirect_to root_url
     end
   end
