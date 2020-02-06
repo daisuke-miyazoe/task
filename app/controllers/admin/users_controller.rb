@@ -66,5 +66,6 @@ class Admin::UsersController < ApplicationController
       redirect_to root_path unless current_user.admin?
     unless
       redirect_to root_url
+    end
   end
 end
