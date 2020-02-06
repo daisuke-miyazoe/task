@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  #before_action :require_admin
+  before_action :require_admin, only: [:index]
   skip_before_action :login_required, if: proc{action_name=="new" || action_name=="create"}
 
   def index
@@ -7,15 +7,25 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    if current_user.admin
+      @user=User.find(params[:id])
+    else
+      @user=User.find(current_user.id)
+    end
   end
 
   def new
     @user = User.new
+    @admin = current_user.admin if current_user
   end
 
   def edit
-    @user = User.find(params[:id])
+    if current_user.admin
+      @user=User.find(params[:id])
+    else
+      @user=User.find(current_user.id)
+    end
+    @admin=current_user.admin if current_user
   end
 
   def create
@@ -52,6 +62,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def require_admin
-    redirect_to root_path unless current_user.admin?
+    if current_user
+      redirect_to root_path unless current_user.admin?
+    unless
+      redirect_to root_url
   end
 end
