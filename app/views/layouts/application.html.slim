@@ -9,10 +9,10 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-  .app-title.navbar-expand-md.navbar-light.bg-light
+  .app-title.navbar.navbar-expand-md.navbar-light.bg-light
     .navbar-brand タスク管理アプリ
 
-    ul.navbar-nav
+    ul.navbar-nav.ml-auto
       - if current_user
         li.nav-item= link_to 'タスク一覧', tasks_path, class: 'nav-link'
         - if current_user.admin?
